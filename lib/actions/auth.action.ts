@@ -2,7 +2,7 @@
 
 import User from '../database/models/user.model'
 import bcryptjs from 'bcryptjs'
-import { createSession, deleteSession } from '../session'
+import { checkCurrentSession, createSession, deleteSession } from '../session'
 import { connectToMongoDB } from '../database/mongoose'
 import { redirect } from 'next/navigation'
 
@@ -61,7 +61,7 @@ export const login = async (email: string, password: string) => {
 			if (isPasswordValid) {
 				// update the flag and create session
 				isLoginSuccessful = true
-				await createSession(JSON.stringify(existingUser._id))
+				await createSession(existingUser._id)
 			} else {
 				// if it doesn't match, throw warning on screen
 				return {
@@ -92,4 +92,15 @@ export const logout = async () => {
 }
 
 // CHECK CURRENT USER
-export const currentUser = async () => {}
+export const currentUser = async () => {
+	try {
+		const currentUser = await checkCurrentSession()
+		const currentUserId = currentUser?.userId
+		const currentUserData = await User.findOne({
+			_id: currentUserId,
+		})
+		return { user: currentUserData }
+	} catch (error) {
+		console.log(error)
+	}
+}

@@ -1,6 +1,7 @@
 import 'server-only'
 import { SignJWT, jwtVerify } from 'jose'
 import { cookies } from 'next/headers'
+import { RequestCookie } from 'next/dist/compiled/@edge-runtime/cookies'
 // import {SessonPayload} from '@/app/lib/definitions'
 
 const secretKey = process.env.SESSION_SECRET
@@ -42,4 +43,11 @@ export async function createSession(userId: string) {
 export async function deleteSession() {
 	const cookieStore = await cookies()
 	cookieStore.delete('session')
+}
+
+export async function checkCurrentSession() {
+	const cookieStore = await cookies()
+	const currentSession = cookieStore.get('session')
+	const payload = await decrypt(currentSession?.value)
+	return payload
 }
