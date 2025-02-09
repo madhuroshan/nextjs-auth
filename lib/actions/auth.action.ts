@@ -6,6 +6,7 @@ import { createSession, deleteSession } from '../session'
 import { connectToMongoDB } from '../database/mongoose'
 import { redirect } from 'next/navigation'
 
+// SIGNUP
 export const signup = async (name: string, email: string, password: string) => {
 	try {
 		// Connect to database
@@ -38,8 +39,49 @@ export const signup = async (name: string, email: string, password: string) => {
 	redirect('/')
 }
 
-export const login = async (email: string, password: string) => {}
-export const currentUser = async () => {}
+// LOGIN
+export const login = async (email: string, password: string) => {
+	let isLoginSuccessful = false
+	try {
+		// Connect to the db
+		await connectToMongoDB()
+
+		// Check if the user exists with email
+		const existingUser = await User.findOne({ email })
+
+		// if yes, check for the password
+		// get hashedpassword and decrypt it
+		// compare it with input password
+
+		if (existingUser) {
+			const isPasswordValid = await bcryptjs.compare(
+				password,
+				existingUser.password
+			)
+			if (isPasswordValid) {
+				// update the flag and create session
+				isLoginSuccessful = true
+				await createSession(JSON.stringify(existingUser._id))
+			} else {
+				// if it doesn't match, throw warning on screen
+				return {
+					message: 'Invalid Password, Try Again',
+				}
+			}
+		} else {
+			// if no, ask user to signup
+			return { message: 'No User found, Please Sign Up' }
+		}
+	} catch (error) {
+		console.log(error)
+		isLoginSuccessful = false
+	}
+
+	// if it matches, redirect to homepage
+	if (isLoginSuccessful) redirect('/')
+}
+
+// LOGOUT
 export const logout = async () => {
 	try {
 		await deleteSession()
@@ -48,3 +90,6 @@ export const logout = async () => {
 	}
 	redirect('/auth/login')
 }
+
+// CHECK CURRENT USER
+export const currentUser = async () => {}
