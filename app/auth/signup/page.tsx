@@ -17,12 +17,10 @@ import { z } from 'zod'
 import Link from 'next/link'
 import { signup } from '@/lib/actions/auth.action'
 import { useState } from 'react'
-import { useRouter } from 'next/navigation'
 
 type Props = {}
 
 const SignupPage = (props: Props) => {
-	const router = useRouter()
 	const [error, setError] = useState<string>('')
 	const form = useForm<z.infer<typeof SignupFormSchema>>({
 		resolver: zodResolver(SignupFormSchema),
@@ -36,14 +34,11 @@ const SignupPage = (props: Props) => {
 
 	// 2. Define a submit handler.
 	async function onSubmit(values: z.infer<typeof SignupFormSchema>) {
-		// Do something with the form values.
 		if (values.password !== values.passwordConfirmation) {
 			setError('Passwords did not match')
 		}
 		const { name, email, password } = values
 		await signup(name, email, password)
-		router.push('/')
-		// ✅ This will be type-safe and validated.
 	}
 
 	return (
