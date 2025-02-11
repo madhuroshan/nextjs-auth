@@ -18,9 +18,7 @@ import Link from 'next/link'
 import { signup } from '@/lib/actions/auth.action'
 import { useState } from 'react'
 
-type Props = {}
-
-const SignupPage = (props: Props) => {
+const SignupPage = () => {
 	const [error, setError] = useState<string>('')
 	const form = useForm<z.infer<typeof SignupFormSchema>>({
 		resolver: zodResolver(SignupFormSchema),
@@ -38,7 +36,10 @@ const SignupPage = (props: Props) => {
 			setError('Passwords did not match')
 		}
 		const { name, email, password } = values
-		await signup(name, email, password)
+		const response = await signup(name, email, password)
+		if (response?.message) {
+			setError(response.message)
+		}
 	}
 
 	return (
