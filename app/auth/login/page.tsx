@@ -53,7 +53,7 @@ const LoginPage = () => {
 							<FormControl>
 								<Input
 									className='border-black border'
-									placeholder='Email'
+									placeholder='Email*'
 									{...field}
 								/>
 							</FormControl>
@@ -70,7 +70,7 @@ const LoginPage = () => {
 							<FormControl>
 								<Input
 									className='border-black border'
-									placeholder='Password'
+									placeholder='Password*'
 									{...field}
 								/>
 							</FormControl>
