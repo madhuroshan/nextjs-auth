@@ -39,7 +39,9 @@ export const signup = async (name: string, email: string, password: string) => {
 	} catch (error) {
 		console.log(error)
 	}
-	redirect('/')
+
+	// redirect to userinfo page instead of homepage
+	redirect('/userinfo')
 }
 
 // LOGIN
@@ -103,12 +105,13 @@ export const currentUser = async () => {
 			const currentUserData = await User.findById(
 				currentUser?.userId as Schema.Types.ObjectId
 			)
-			console.log('currentUserData: ', currentUserData)
-			console.log(currentUser)
 
 			return {
 				name: currentUserData?.name,
 				email: currentUserData?.email,
+				bio: currentUserData?.bio,
+				company: currentUserData?.company,
+				website: currentUserData?.website,
 			}
 		}
 	} catch (error) {
@@ -118,4 +121,23 @@ export const currentUser = async () => {
 	if (!currentActiveUser) {
 		redirect('/auth/login')
 	}
+}
+
+export const userInfo = async (
+	bio?: string,
+	company?: string,
+	website?: string
+) => {
+	try {
+		const currentUser = await checkCurrentSession()
+		const updateUserInfo = await User.updateOne(
+			{ _id: currentUser?.userId as Schema.Types.ObjectId },
+			{
+				$set: { bio: bio, company: company, website: website },
+			}
+		)
+	} catch (error) {
+		console.log('Error', error)
+	}
+	redirect('/')
 }
