@@ -18,9 +18,7 @@ import Link from 'next/link'
 import { login } from '@/lib/actions/auth.action'
 import { useState } from 'react'
 
-type Props = {}
-
-const LoginPage = (props: Props) => {
+const LoginPage = () => {
 	const [error, setError] = useState('')
 	const form = useForm<z.infer<typeof LoginFormSchema>>({
 		resolver: zodResolver(LoginFormSchema),

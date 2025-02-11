@@ -4,6 +4,9 @@ export interface IUser {
 	name: string
 	email: string
 	password: string
+	bio?: string
+	company?: string
+	website?: string
 }
 
 export const UserSchema = new mongoose.Schema({
@@ -19,6 +22,15 @@ export const UserSchema = new mongoose.Schema({
 	password: {
 		type: String,
 		required: [true, 'Please provide a password'],
+	},
+	bio: {
+		type: String,
+	},
+	company: {
+		type: String,
+	},
+	website: {
+		type: String,
 	},
 })
 
