@@ -18,6 +18,14 @@ export const UserInfoSchema = z.object({
 	website: z.string().min(0).max(50).optional(),
 })
 
+export const EditInfoSchema = z.object({
+	name: z.string().min(2).max(50),
+	email: z.string().email(),
+	bio: z.string().min(0).max(100),
+	company: z.string().min(0).max(50),
+	website: z.string().min(0).max(50).optional(),
+})
+
 export type FormState =
 	| {
 			errors?: {

@@ -130,7 +130,7 @@ export const userInfo = async (
 ) => {
 	try {
 		const currentUser = await checkCurrentSession()
-		const updateUserInfo = await User.updateOne(
+		await User.updateOne(
 			{ _id: currentUser?.userId as Schema.Types.ObjectId },
 			{
 				$set: { bio: bio, company: company, website: website },
@@ -138,6 +138,39 @@ export const userInfo = async (
 		)
 	} catch (error) {
 		console.log('Error', error)
+	}
+	redirect('/')
+}
+
+export const editInfo = async (values: {
+	name: string
+	email: string
+	bio: string
+	company: string
+	website?: string | undefined
+}) => {
+	try {
+		const currentUser = await checkCurrentSession()
+		const currentUserData = await User.findById(
+			currentUser?.userId as Schema.Types.ObjectId
+		)
+		console.log(currentUserData)
+		await User.updateOne(
+			{
+				_id: currentUser?.userId as Schema.Types.ObjectId,
+			},
+			{
+				$set: {
+					name: values.name,
+					email: values.email,
+					bio: values.bio,
+					company: values.company,
+					website: values.website,
+				},
+			}
+		)
+	} catch (error) {
+		console.log(error)
 	}
 	redirect('/')
 }

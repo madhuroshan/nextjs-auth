@@ -15,7 +15,7 @@ type Props = {
 
 const UserProfile = (props: Props) => {
 	return (
-		<div>
+		<div className='m-4'>
 			<h1>User Profile</h1>
 			<p>Name: {props.user.name}</p>
 			<p>Email: {props.user.email}</p>
@@ -23,7 +23,9 @@ const UserProfile = (props: Props) => {
 			<p>Company: {props.user.company}</p>
 			<p>Website: {props.user.website}</p>
 
-			<Button onClick={logout}>Logout</Button>
+			<Button onClick={logout} className='my-4 mr-4'>
+				Logout
+			</Button>
 		</div>
 	)
 }
