@@ -1,6 +1,6 @@
 'use client'
 
-import { logout } from '@/lib/actions/auth.action'
+import { goToHomepage } from '@/lib/actions/user.action'
 import { Button } from './ui/button'
 
 type Props = {
@@ -22,8 +22,8 @@ const UserProfile = (props: Props) => {
 			{props.user.bio && <p>Bio: {props.user.bio}</p>}
 			{props.user.company && <p>Company: {props.user.company}</p>}
 			{props.user.website && <p>Website: {props.user.website}</p>}
-			<Button onClick={logout} className='my-4 mr-4'>
-				Logout
+			<Button onClick={goToHomepage} className='m-4 ml-0'>
+				Go Back
 			</Button>
 		</div>
 	)

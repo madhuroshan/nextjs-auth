@@ -93,3 +93,11 @@ export const passwordChange = async (values: {
 		console.log(error)
 	}
 }
+
+export const redirectToUserProfile = async () => {
+	redirect('/userprofile')
+}
+
+export const goToHomepage = async () => {
+	redirect('/')
+}
