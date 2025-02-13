@@ -102,6 +102,7 @@ export const currentUser = async () => {
 	try {
 		const currentUser = await checkCurrentSession()
 		if (currentUser) {
+			// console.log(currentUser)
 			const currentUserData = await User.findById(
 				currentUser?.userId as Schema.Types.ObjectId
 			)

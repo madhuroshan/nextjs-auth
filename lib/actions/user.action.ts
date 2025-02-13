@@ -5,6 +5,8 @@ import { checkCurrentSession } from '../session'
 import { redirect } from 'next/navigation'
 import console from 'console'
 import { Schema } from 'mongoose'
+import { connectToMongoDB } from '../database/mongoose'
+import bcryptjs from 'bcryptjs'
 
 export const userInfo = async (
 	bio?: string,
@@ -13,6 +15,7 @@ export const userInfo = async (
 ) => {
 	try {
 		const currentUser = await checkCurrentSession()
+
 		await User.updateOne(
 			{ _id: currentUser?.userId as Schema.Types.ObjectId },
 			{
@@ -52,4 +55,41 @@ export const editInfo = async (values: {
 		console.log(error)
 	}
 	redirect('/')
+}
+
+export const passwordChange = async (values: {
+	oldPassword: string
+	newPassword: string
+}) => {
+	try {
+		const { oldPassword, newPassword } = values
+		await connectToMongoDB()
+
+		const currentUserSession = await checkCurrentSession()
+		if (currentUserSession) {
+			const currentUser = await User.findById(
+				currentUserSession?.userId as Schema.Types.ObjectId
+			)
+			const isOldPasswordValid = await bcryptjs.compare(
+				oldPassword,
+				currentUser.password
+			)
+
+			if (isOldPasswordValid) {
+				const hashNewPassword = await bcryptjs.hash(newPassword!, 10)
+				await User.updateOne(
+					{
+						email: currentUser.email,
+					},
+					{
+						$set: {
+							password: hashNewPassword,
+						},
+					}
+				)
+			}
+		}
+	} catch (error) {
+		console.log(error)
+	}
 }

@@ -1,6 +1,7 @@
 import UserProfile from '@/components/UserProfile'
 import { currentUser } from '@/lib/actions/auth.action'
 import EditInfo from '@/components/EditInfo'
+import PasswordChange from '@/components/PasswordChange'
 
 export default async function Home() {
 	const user = await currentUser()
@@ -28,6 +29,7 @@ export default async function Home() {
 					}
 				}
 			/>
+			<PasswordChange />
 		</div>
 	)
 }

@@ -79,7 +79,7 @@ const LoginPage = () => {
 					)}
 				/>
 
-				{error && <p className='text-red-500 p-2'>{error}</p>}
+				{error && <p className='text-red-500 text-sm'>{error}</p>}
 
 				<Button type='submit'>Login</Button>
 				<p>
