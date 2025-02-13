@@ -40,7 +40,6 @@ const PasswordChange = () => {
 
 	async function onSubmit(values: z.infer<typeof PasswordChangeSchema>) {
 		const { oldPassword, newPassword, newPasswordConfirmation } = values
-		// How to fix this
 		if (oldPassword === newPassword) {
 			setError('New Password should not match the Old Password')
 		} else if (newPassword !== newPasswordConfirmation) {
@@ -50,8 +49,6 @@ const PasswordChange = () => {
 			form.reset()
 			setOpen(false)
 		}
-
-		// console.log(response)
 	}
 
 	useEffect(() => {
@@ -71,10 +68,9 @@ const PasswordChange = () => {
 				</DialogTrigger>
 				<DialogContent className='sm:max-w-[425px]'>
 					<DialogHeader>
-						<DialogTitle>Edit profile</DialogTitle>
+						<DialogTitle>Change Password</DialogTitle>
 						<DialogDescription>
-							Make changes to your profile here. Click save when
-							you're done.
+							Update your password here.
 						</DialogDescription>
 					</DialogHeader>
 					<Form {...form}>
