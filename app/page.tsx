@@ -1,6 +1,6 @@
 import UserProfile from '@/components/UserProfile'
 import { currentUser } from '@/lib/actions/auth.action'
-import EditInfo from './editInfo/page'
+import EditInfo from '@/components/EditInfo'
 
 export default async function Home() {
 	const user = await currentUser()

@@ -14,7 +14,7 @@ import {
 import { z } from 'zod'
 import { Button } from '@/components/ui/button'
 import { Input } from '@/components/ui/input'
-import { userInfo } from '@/lib/actions/auth.action'
+import { userInfo } from '@/lib/actions/user.action'
 
 const UserInfo = () => {
 	const form = useForm<z.infer<typeof UserInfoSchema>>({

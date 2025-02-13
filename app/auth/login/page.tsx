@@ -49,11 +49,11 @@ const LoginPage = () => {
 					name='email'
 					render={({ field }) => (
 						<FormItem>
-							<FormLabel>Email</FormLabel>
+							<FormLabel>Email*</FormLabel>
 							<FormControl>
 								<Input
 									className='border-black border'
-									placeholder='Email*'
+									placeholder='Email'
 									{...field}
 								/>
 							</FormControl>
@@ -66,11 +66,11 @@ const LoginPage = () => {
 					name='password'
 					render={({ field }) => (
 						<FormItem>
-							<FormLabel>Password</FormLabel>
+							<FormLabel>Password*</FormLabel>
 							<FormControl>
 								<Input
 									className='border-black border'
-									placeholder='Password*'
+									placeholder='Password'
 									{...field}
 								/>
 							</FormControl>
