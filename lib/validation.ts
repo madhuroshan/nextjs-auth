@@ -26,6 +26,12 @@ export const EditInfoSchema = z.object({
 	website: z.string().min(0).max(50).optional(),
 })
 
+export const PasswordChangeSchema = z.object({
+	oldPassword: z.string().min(6).max(50),
+	newPassword: z.string().min(6).max(50),
+	newPasswordConfirmation: z.string().min(6).max(50),
+})
+
 export type FormState =
 	| {
 			errors?: {
